@@ -1,6 +1,7 @@
 import psycopg2
 from flask import Flask, jsonify, request
 
+
 app = Flask(__name__)
 
 conn = psycopg2.connect("dbname='be-cruda' host='localhost'")
@@ -32,7 +33,7 @@ def create_tables():
             phone VARCHAR,
             city VARCHAR,
             state VARCHAR,
-            org_id INT,
+            org_id INT REFERENCES Organizations(org_id),
             active smallint
 
         );
@@ -420,8 +421,6 @@ def delete_student(student_id):
     cursor.execute("DELETE FROM Students WHERE student_id = %s", [student_id])
     conn.commit()
     return jsonify({"message": "Student DELETED"}), 200
-
-
 
 
 
