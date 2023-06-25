@@ -11,6 +11,7 @@ cursor = conn.cursor()
 def create_tables():
     print("Creating Tables...")
 
+# WE HAVE TO DO ORGS FIRST BEACUSE WE NEED THE TABLE CREATED THAT HAS THE VALUE WE ARE GOING TO NEED WHEN WE REFERENCE A VALUE THAT IS IN THE TABLE WE NEED.  
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Organizations(
             org_id SERIAL PRIMARY KEY,
@@ -24,6 +25,9 @@ def create_tables():
     
     """)
 
+# REMEMBER WE HAVE TO 1. ADD THE FOREIN KEY & REFERENCE AT THE END 2. WE ALSO ADDED A CONSTRAINT AT THE END.. WHICH IS THE LAST TWO LINES OF SYNTAX AT THE END OF THE QUERY..
+# ..THE CONSTRAINTS ARE, FOREIN KEY(ORG_ID) FOR THE COLUMN NAME & IN THAT COLUMN, REFERENCE WILL LOOK FOR THE TABLE AT THE COLUMN OF ORGANIZATIONS BY THE NAME THATS IN THE PARENTHESIS.    
+
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Students(
             student_id SERIAL PRIMARY KEY,
@@ -33,8 +37,10 @@ def create_tables():
             phone VARCHAR,
             city VARCHAR,
             state VARCHAR,
-            org_id INT REFERENCES Organizations(org_id),
-            active smallint
+            org_id INT, 
+            active smallint,
+            FOREIGN KEY(org_id) 
+                REFERENCES Organizations (org_id)
 
         );
     
