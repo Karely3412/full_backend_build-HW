@@ -240,6 +240,7 @@ def student_add():
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # READ - C[R]UDA
 
+
 @app.route('/students/get')
 def get_all_students():
     cursor.execute("SELECT * FROM Students")
@@ -267,77 +268,104 @@ def get_all_students():
     return jsonify(result_list)
 
 
-@app.route('/students/active', methods=["PATCH"])
-def get_active_students():
-    cursor.execute("SELECT * FROM Students WHERE active=1;")
-    results = cursor.fetchall()
+# @app.route('/students/get')
+# def get_all_students():
+#     cursor.execute("SELECT * FROM Students")
+#     results = cursor.fetchall()
 
-    if results == "":
-        return jsonify({"error": "invalid input"}), 404
-    else:
-        result_list = []
-        for result in results:
-            results_dict = {
-                "student_id": result[0],
-                "first_name": result[1],
-                "last_name": result[2],
-                "email": result[3],
-                "phone": result[4],
-                "city": result[5],
-                "state": result[6],
-                "org_id": result[7],
-                "active": result[8]
-            }
-            result_list.append(results_dict)
+#     if results == "":
+#         return jsonify({"error": "invalid input"}), 404
+#     else:
+#         result_list = []
+#         for result in results:
+#             results_dict = {
+#                 "student_id": result[0],
+#                 "first_name": result[1],
+#                 "last_name": result[2],
+#                 "email": result[3],
+#                 "phone": result[4],
+#                 "city": result[5],
+#                 "state": result[6],
+#                 "org_id": result[7],
+#                 "active": result[8]
+#             }
+#             result_list.append(results_dict)
 
-
-    conn.commit()
-    return result_list
-
+#     conn.commit()
+#     return jsonify(result_list)
 
 
-@app.route('/student/student_id/<student_id>', methods=["GET"]) 
-def get_student_id(student_id): 
+# @app.route('/students/active', methods=["PATCH"])
+# def get_active_students():
+#     cursor.execute("SELECT * FROM Students WHERE active=1;")
+#     results = cursor.fetchall()
+
+#     if results == "":
+#         return jsonify({"error": "invalid input"}), 404
+#     else:
+#         result_list = []
+#         for result in results:
+#             results_dict = {
+#                 "student_id": result[0],
+#                 "first_name": result[1],
+#                 "last_name": result[2],
+#                 "email": result[3],
+#                 "phone": result[4],
+#                 "city": result[5],
+#                 "state": result[6],
+#                 "org_id": result[7],
+#                 "active": result[8]
+#             }
+#             result_list.append(results_dict)
+
+
+#     conn.commit()
+#     return result_list
+
+
+
+# @app.route('/student/student_id/<student_id>', methods=["GET"]) 
+# def get_student_id(student_id): 
     
-    cursor.execute("SELECT * FROM Students WHERE student_id=%s;", [student_id]) 
-    result = cursor.fetchone() 
-    if result is None: 
-        return jsonify({"error": "invalid input"}), 404 
+#     cursor.execute("SELECT * FROM Students WHERE student_id=%s;", [student_id]) 
+#     result = cursor.fetchone() 
+#     if result is None: 
+#         return jsonify({"error": "invalid input"}), 404 
         
-    result_dict = { 
-        "student_id": result[0], 
-        "first_name": result[1], 
-        "last_name": result[2], 
-        "email": result[3], 
-        "phone": result[4], 
-        "city": result[5], 
-        "state": result[6], 
-        "org_id": result[7], 
-        "active": result[8] } 
-    conn.commit() 
-    return jsonify(result_dict)
+#     result_dict = { 
+#         "student_id": result[0], 
+#         "first_name": result[1], 
+#         "last_name": result[2], 
+#         "email": result[3], 
+#         "phone": result[4], 
+#         "city": result[5], 
+#         "state": result[6], 
+#         "org_id": result[7], 
+#         "active": result[8] } 
+#     conn.commit() 
+#     return jsonify(result_dict)
 
 
-@app.route('/student/email/<email>', methods=["GET"]) 
-def get_student_email(email): 
+# @app.route('/student/email/<email>', methods=["GET"]) 
+# def get_student_email(email): 
     
-    cursor.execute("SELECT * FROM Students WHERE email=%s;", [email]) 
-    result = cursor.fetchone() 
-    if result is "": 
-        return jsonify({"error": "invalid input"}), 404 
+#     cursor.execute("SELECT * FROM Students WHERE email=%s;", [email]) 
+#     result = cursor.fetchone() 
+#     if result is "": 
+#         return jsonify({"error": "invalid input"}), 404 
         
-    result_dict = { 
-        "student_id": result[0], 
-        "first_name": result[1], 
-        "last_name": result[2], 
-        "email": result[3], 
-        "phone": result[4], 
-        "city": result[5], 
-        "state": result[6], 
-        "org_id": result[7], 
-        "active": result[8] } 
-    conn.commit() 
-    return jsonify(result_dict)
+#     result_dict = { 
+#         "student_id": result[0], 
+#         "first_name": result[1], 
+#         "last_name": result[2], 
+#         "email": result[3], 
+#         "phone": result[4], 
+#         "city": result[5], 
+#         "state": result[6], 
+#         "org_id": result[7], 
+#         "active": result[8] } 
+#     conn.commit() 
+#     return jsonify(result_dict)
 
 # # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # # UPDATE - CR[U]DA
