@@ -56,16 +56,42 @@
 #______________________________________________________________
 
 
-1. @app.route('/student/update/<student_id>', methods=["PATCH"]): This line defines a route for the URL /student/update/<student_id>, where <student_id> is a variable that represents the ID of the student being updated. The route is configured to only accept HTTP PATCH requests.
-2. def update_stud_status(student_id):: This is the function that will be executed when a request is made to the defined route. It takes the student_id as a parameter.
-3. cursor.execute("SELECT first_name, last_name, email, phone, city, state, org_id, active FROM Students WHERE student_id =%s;", [student_id]): This line executes a SQL query to retrieve the information of the student with the given student_id from the database. It fetches a single row of the result using cursor.fetchone().
-4. if result is None: return jsonify({"error": "invalid input"}), 404: If no student is found for the given student_id, the code returns a JSON response with an error message and a status code of 404 (Not Found).
-5. result_dict = { ... }: This block initializes a dictionary result_dict and populates it with the retrieved student information. Each field of the dictionary corresponds to a column in the Students table.
-6. conn.commit(): This line commits the changes made to the database so far. It ensures that any previous database operations are persisted.
-7. req_data = request.json if request.json else request.form: This line checks if the request body contains JSON data (request.json) and assigns it to req_data. If the JSON data is not available, it falls back to retrieving form data (request.form).
-8. for key, val in req_data.items(): ...: This loop iterates over the items of req_data, which can be either JSON or form data. It updates the corresponding fields in result_dict if the values in the request data are not empty or null.
-9. cursor.execute('''UPDATE Students SET ... ''', [...]): This line executes an SQL update statement to modify the student's information in the database. The values to be updated are provided as parameters in a list. The UPDATE statement sets the new values for each field based on the values in result_dict and filters the update operation based on the student_id.
-10. conn.commit(): This line commits the changes made to the database, persisting the updated student information.
+1. @app.route('/student/update/<student_id>', methods=["PATCH"]): 
+  - This line defines a route for the URL /student/update/<student_id>, where <student_id> is a variable that represents the ID of the student being updated. 
+    The route is configured to only accept HTTP PATCH requests.
+
+2. def update_stud_status(student_id):
+  -This is the function that will be executed when a request is made to the defined route. It takes the student_id as a parameter.
+
+3. cursor.execute("SELECT first_name, last_name, email, phone, city, state, org_id, active FROM Students WHERE student_id =%s;", [student_id]): 
+  -This line executes a SQL query to retrieve the information of the student with the given student_id from the database. 
+    It fetches a single row of the result using cursor.fetchone().
+
+4. if result is None: return jsonify({"error": "invalid input"}), 404:
+  -If no student is found for the given student_id, the code returns a JSON response with an error message and a status code of 404 (Not Found).
+
+5. result_dict = { ... }:
+  - This block initializes a dictionary result_dict and populates it with the retrieved student information. 
+    Each field of the dictionary corresponds to a column in the Students table.
+
+6. conn.commit():
+  - This line commits the changes made to the database so far. It ensures that any previous database operations are persisted.
+
+7. req_data = request.json if request.json else request.form:
+  - This line checks if the req -uest body contains JSON data (request.json) and assigns it to req_data. 
+    If the JSON data is not available, it falls back to retrieving form data (request.form).
+
+8. for key, val in req_data.items():
+  - ...: This loop iterates over the items of req_data, which can be either JSON or form data. 
+    It updates the corresponding fields in result_dict if the values in the request data are not empty or null.
+
+9. cursor.execute('''UPDATE Students SET ... ''', [...]):
+  - This line executes an SQL update statement to modify the student's information in the database. 
+    The values to be updated are provided as parameters in a list. The UPDATE statement sets the new values for each field based on the values in result_dict and filters the update operation based on the student_id.
+
+10. conn.commit():
+  - This line commits the changes made to the database, persisting the updated student information.
+
 
 return jsonify(result_dict), 201: Finally, the function returns a JSON response containing the updated student information (result_dict) and a status code of 201 (Created) to indicate that the update was successful.
 Overall, this code retrieves the existing information of a student from the database, updates the relevant fields based on the provided data in the PATCH request, and persists the changes in the database. It then returns the updated student information in a JSON response.
